@@ -26,11 +26,27 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
+    <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="baophuc1508@gmail.com"
+            android:layout_marginTop="56dp"
+    />
+
     <com.stripe.android.view.CardInputWidget
             android:id="@+id/cardInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"/>
+            android:layout_marginTop="16dp"/>
+
+    <EditText
+            android:id="@+id/editPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:layout_marginTop="16dp"
+    />
 
     <Button
             android:id="@+id/btnOk"
