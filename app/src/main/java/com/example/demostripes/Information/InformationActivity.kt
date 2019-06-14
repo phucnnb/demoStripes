@@ -2,9 +2,11 @@ package com.example.demostripes.Information
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.demostripes.R
 import com.stripe.android.model.Card
+import com.stripe.android.model.Token
 import kotlinx.android.synthetic.main.activity_information.*
 
 class InformationActivity : AppCompatActivity(), InformationView {
@@ -26,12 +28,13 @@ class InformationActivity : AppCompatActivity(), InformationView {
         }
     }
 
-    override fun getInformationCard(cardInformation: Card, checkCard: Boolean) {
+    override fun getInformationCard(cardInformation: Card, checkCard: Boolean, result: Token?) {
        if(cardInformation == null){
            Toast.makeText(applicationContext,"LỖI",Toast.LENGTH_SHORT).show()
        }else
            if(checkCard){
                Toast.makeText(applicationContext,"Success",Toast.LENGTH_SHORT).show()
+               Log.d("AAA",result.toString())
            }else {
                Toast.makeText(applicationContext,"Fail",Toast.LENGTH_SHORT).show()
            }

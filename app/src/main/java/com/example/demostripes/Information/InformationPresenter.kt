@@ -17,11 +17,11 @@ class InformationPresenter(private var context: Context, private var view: Infor
 
         stripe.createToken(cardInformation, object : TokenCallback {
             override fun onSuccess(result: Token) {
-                view.getInformationCard(cardInformation,true)
+                view.getInformationCard(cardInformation,true,result)
             }
 
             override fun onError(e: java.lang.Exception) {
-                view.getInformationCard(cardInformation,false)
+                view.getInformationCard(cardInformation, false, null)
             }
 
         })
