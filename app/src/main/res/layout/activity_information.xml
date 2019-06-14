@@ -56,6 +56,21 @@
             android:layout_marginTop="56dp"
             android:text="ENTER"/>
 
+    <Button
+            android:id="@+id/btnCreate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="56dp"
+            android:text="Create"/>
+
+    <TextView
+            android:id="@+id/txtID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+    />
 
 
 </LinearLayout>

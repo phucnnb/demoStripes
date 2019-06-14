@@ -17,15 +17,37 @@ class InformationPresenter(private var context: Context, private var view: Infor
 
 
     var listInfo: List<HashMap<String, String>>? = null
+    var listEmail: List<HashMap<String, String>>? = null
     var data : String = ""
 
-    fun logicGetInformation(cardInformation: Card, email: String, price: String) {
+    fun logicCreatAcc(email: String){
+        Log.d("AAA",email)
+        listEmail = ArrayList()
+
+        val informationEmail : HashMap<String,String> = HashMap()
+        informationEmail["email"] = email
+        Log.d("AAA",informationEmail.toString())
+        (listEmail as ArrayList<HashMap<String, String>>).add(informationEmail)
+
+        var downloadData : DownloadData1 = DownloadData1(listEmail,"https://baophuc.000webhostapp.com/createStripes.php")
+        downloadData.execute()
+        data = downloadData.get()
+
+        view.createID(data)
+    }
+
+    fun logicGetInformation(
+        cardInformation: Card,
+        email: String,
+        price: String,
+        id: String
+    ) {
 
         val stripe = Stripe(context, Constants.PUBLISHABLE_KEY)
 
         stripe.createToken(cardInformation, object : TokenCallback {
             override fun onSuccess(result: Token) {
-                xulitaikhoan(email,price,result.id,"usd")
+                xulitaikhoan(email,price,result.id,"usd",id)
                 var downloadData1 : DownloadData1 = DownloadData1(listInfo,"https://baophuc.000webhostapp.com/payment.php")
                 downloadData1.execute()
                 data = downloadData1.get()
@@ -47,7 +69,13 @@ class InformationPresenter(private var context: Context, private var view: Infor
 
     }
 
-    private fun xulitaikhoan(email: String, price: String, result: String, s2: String) {
+    private fun xulitaikhoan(
+        email: String,
+        price: String,
+        result: String,
+        s2: String,
+        id: String
+    ) {
         listInfo = ArrayList()
         val information1 : HashMap<String,String> = HashMap()
         information1["description"] = email
@@ -61,10 +89,16 @@ class InformationPresenter(private var context: Context, private var view: Infor
         val information4 : HashMap<String,String> = HashMap()
         information4["currency"] = s2
 
+        val information5 : HashMap<String,String> = HashMap()
+        information4["customer"] = id
+
+
+
         (listInfo as ArrayList<HashMap<String, String>>).add(information1)
         (listInfo as ArrayList<HashMap<String, String>>).add(information2)
         (listInfo as ArrayList<HashMap<String, String>>).add(information3)
         (listInfo as ArrayList<HashMap<String, String>>).add(information4)
+        (listInfo as ArrayList<HashMap<String, String>>).add(information5)
     }
 
 

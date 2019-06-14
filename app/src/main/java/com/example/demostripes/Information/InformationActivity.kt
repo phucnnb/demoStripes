@@ -11,16 +11,25 @@ import kotlinx.android.synthetic.main.activity_information.*
 
 class InformationActivity : AppCompatActivity(), InformationView {
 
+
     private lateinit var cardInformation: Card
     private lateinit var logic: InformationPresenter
     private var email : String = ""
     private var price : String = ""
-
+    private var id : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_information)
         logic = InformationPresenter(this,this)
         buttonOK()
+        buttonCreate()
+    }
+
+    private fun buttonCreate() {
+        btnCreate.setOnClickListener {
+            email = editEmail.text.toString()
+            logic.logicCreatAcc(email)
+        }
     }
 
     private fun buttonOK() {
@@ -28,9 +37,14 @@ class InformationActivity : AppCompatActivity(), InformationView {
             cardInformation = cardInput.card!!
             email = editEmail.text.toString()
             price = editPrice.text.toString()
-            logic.logicGetInformation(cardInformation,email,price)
+            id = txtID.text.toString()
+            logic.logicGetInformation(cardInformation,email,price,id)
 
         }
+    }
+
+    override fun createID(id: String) {
+        txtID.text = id
     }
 
     override fun getInformationCard(cardInformation: Card, checkCard: Boolean, result: Token?) {

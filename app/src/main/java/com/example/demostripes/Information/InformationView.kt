@@ -10,4 +10,5 @@ interface InformationView {
         result: Token?
     )
     fun sendCard()
+    fun createID(id : String)
 }
