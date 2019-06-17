@@ -11,4 +11,5 @@ interface InformationView {
     )
     fun sendCard()
     fun createID(id : String)
+    fun payment(cardInformation: Card, checkCard: Boolean, result: Token?)
 }

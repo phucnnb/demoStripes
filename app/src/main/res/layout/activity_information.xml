@@ -26,19 +26,18 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
+    <com.stripe.android.view.CardInputWidget
+            android:id="@+id/cardInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"/>
     <EditText
             android:id="@+id/editEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="baophuc1508@gmail.com"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="16dp"
     />
-
-    <com.stripe.android.view.CardInputWidget
-            android:id="@+id/cardInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"/>
 
     <EditText
             android:id="@+id/editPrice"
@@ -49,27 +48,52 @@
     />
 
     <Button
-            android:id="@+id/btnOk"
+        android:id="@+id/btnGetToken"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="get Token"/>
+
+    <TextView
+            android:id="@+id/txtTokenID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="56dp"
-            android:text="ENTER"/>
+            android:layout_marginTop="12dp"
+    />
 
     <Button
             android:id="@+id/btnCreate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="16dp"
             android:text="Create"/>
-
     <TextView
-            android:id="@+id/txtID"
+            android:id="@+id/txtIDcus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
+    />
+
+    <Button
+            android:id="@+id/btnOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="ENTER"/>
+
+
+
+    <TextView
+            android:id="@+id/txtToken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
     />
 
 

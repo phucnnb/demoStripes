@@ -2,7 +2,6 @@ package com.example.demostripes.Information
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import com.example.demostripes.R
 import com.stripe.android.model.Card
@@ -16,19 +15,29 @@ class InformationActivity : AppCompatActivity(), InformationView {
     private lateinit var logic: InformationPresenter
     private var email : String = ""
     private var price : String = ""
-    private var id : String = ""
+    private var idCus : String = ""
+    private var tokenId : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_information)
         logic = InformationPresenter(this,this)
+        buttonGetToken()
         buttonOK()
         buttonCreate()
     }
 
+    private fun buttonGetToken() {
+        btnGetToken.setOnClickListener {
+            cardInformation = cardInput.card!!
+            logic.logicGetToken(cardInformation)
+        }
+    }
+
     private fun buttonCreate() {
         btnCreate.setOnClickListener {
+            tokenId = txtTokenID.text.toString()
             email = editEmail.text.toString()
-            logic.logicCreatAcc(email)
+            logic.logicCreatAcc(email,tokenId)
         }
     }
 
@@ -37,14 +46,14 @@ class InformationActivity : AppCompatActivity(), InformationView {
             cardInformation = cardInput.card!!
             email = editEmail.text.toString()
             price = editPrice.text.toString()
-            id = txtID.text.toString()
-            logic.logicGetInformation(cardInformation,email,price,id)
+            idCus = txtIDcus.text.toString()
+            logic.logicGetInformation(cardInformation,email,price,idCus)
 
         }
     }
 
     override fun createID(id: String) {
-        txtID.text = id
+        txtIDcus.text = id
     }
 
     override fun getInformationCard(cardInformation: Card, checkCard: Boolean, result: Token?) {
@@ -54,10 +63,25 @@ class InformationActivity : AppCompatActivity(), InformationView {
            if(checkCard){
                Toast.makeText(applicationContext,"Success",Toast.LENGTH_SHORT).show()
 
-               Log.d("AAA",result.toString())
+               txtTokenID.text = result!!.id
            }else {
                Toast.makeText(applicationContext,"Fail",Toast.LENGTH_SHORT).show()
            }
+
+
+    }
+
+    override fun payment (cardInformation: Card, checkCard: Boolean, result: Token?) {
+        if(cardInformation == null){
+            Toast.makeText(applicationContext,"LỖI",Toast.LENGTH_SHORT).show()
+        }else
+            if(checkCard){
+                Toast.makeText(applicationContext,"Success",Toast.LENGTH_SHORT).show()
+
+                txtToken.text = result!!.id
+            }else {
+                Toast.makeText(applicationContext,"Fail",Toast.LENGTH_SHORT).show()
+            }
 
 
     }
