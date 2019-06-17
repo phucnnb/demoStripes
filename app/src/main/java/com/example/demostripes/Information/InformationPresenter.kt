@@ -9,8 +9,7 @@ import com.stripe.android.model.Card
 import com.stripe.android.Stripe
 import com.stripe.android.TokenCallback
 import com.stripe.android.model.Token
-
-
+import org.json.JSONObject
 
 
 class InformationPresenter(private var context: Context, private var view: InformationView) :Download  {
@@ -18,14 +17,17 @@ class InformationPresenter(private var context: Context, private var view: Infor
 
     var listInfo: List<HashMap<String, String>>? = null
     var listEmail: List<HashMap<String, String>>? = null
+    var listCustom: List<HashMap<String, String>>? = null
     var data : String = ""
     var tokenID: String = ""
+    var cusID : String = ""
+    var cardID : String =""
     fun logicGetToken(cardInformation: Card) {
         val stripe = Stripe(context, Constants.PUBLISHABLE_KEY)
         stripe.createToken(cardInformation, object : TokenCallback {
             override fun onSuccess(result: Token) {
                 tokenID = result.id
-                Log.d("AAA","Token id: " + result.id)
+                Log.d("BBB","Token id: " + result.id)
                 view.getInformationCard(cardInformation,true,result)
             }
 
@@ -51,8 +53,32 @@ class InformationPresenter(private var context: Context, private var view: Infor
         var downloadData : DownloadData1 = DownloadData1(listEmail,"https://baophuc.000webhostapp.com/createStripes.php")
         downloadData.execute()
         data = downloadData.get()
-
+        cusID = data
         view.createID(data)
+        Log.d("BBB",data)
+    }
+
+    fun logicGetIDcard() {
+        listCustom = ArrayList()
+        val idCustom : HashMap<String,String> = HashMap()
+        idCustom["customer"] = cusID
+
+        (listCustom as ArrayList<HashMap<String, String>>).add(idCustom)
+
+        var downloadData1 : DownloadData1 = DownloadData1(listCustom,"https://baophuc.000webhostapp.com/getIDcard.php")
+        downloadData1.execute()
+        var data = downloadData1.get()
+        Log.d ("DDD" , data)
+
+        var jsonObject = JSONObject(data)
+        var jsonArray = jsonObject.getJSONArray("data")
+        for (i in 0 until jsonArray.length()) {
+
+            var jsonObject = jsonArray.getJSONObject(0)
+            var id: String = jsonObject.getString("id")
+            Log.d("DDD", "ID: " + id )
+            cardID = id
+        }
     }
 
     fun logicGetInformation(cardInformation: Card, email: String, price: String, id: String) {
@@ -105,7 +131,7 @@ class InformationPresenter(private var context: Context, private var view: Infor
         information2["amount"] = price
 
         val information3 : HashMap<String,String> = HashMap()
-        information3["stripeToken"] = result
+        information3["cardID"] = cardID
 
         val information4 : HashMap<String,String> = HashMap()
         information4["currency"] = s2
@@ -126,6 +152,8 @@ class InformationPresenter(private var context: Context, private var view: Infor
     override fun download(s: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+
 
 
 }

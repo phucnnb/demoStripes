@@ -2,11 +2,14 @@ package com.example.demostripes.Information
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import com.example.demostripes.Download.DownloadData1
 import com.example.demostripes.R
 import com.stripe.android.model.Card
 import com.stripe.android.model.Token
 import kotlinx.android.synthetic.main.activity_information.*
+import org.json.JSONObject
 
 class InformationActivity : AppCompatActivity(), InformationView {
 
@@ -24,6 +27,15 @@ class InformationActivity : AppCompatActivity(), InformationView {
         buttonGetToken()
         buttonOK()
         buttonCreate()
+        buttonParse()
+    }
+
+    private fun buttonParse() {
+        var s : String = "{\"object\":\"list\",\"data\":[{\"id\":\"card_1EmFrWAWnzXOI7ehEWD7J9aC\",\"object\":\"card\",\"address_city\":null,\"address_country\":null,\"address_line1\":null,\"address_line1_check\":null,\"address_line2\":null,\"address_state\":null,\"address_zip\":null,\"address_zip_check\":null,\"brand\":\"Visa\",\"country\":\"US\",\"customer\":\"cus_FGnSo8aLDrfUuI\",\"cvc_check\":\"pass\",\"dynamic_last4\":null,\"exp_month\":12,\"exp_year\":2020,\"fingerprint\":\"vHz2mkuJHctz0190\",\"funding\":\"credit\",\"last4\":\"4242\",\"metadata\":[],\"name\":null,\"tokenization_method\":null}],\"has_more\":false,\"total_count\":1,\"url\":\"\\/v1\\/customers\\/cus_FGnSo8aLDrfUuI\\/sources\"}"
+
+        btnParse.setOnClickListener {
+            logic.logicGetIDcard()
+        }
     }
 
     private fun buttonGetToken() {

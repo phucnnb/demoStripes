@@ -96,5 +96,15 @@
             android:layout_marginTop="12dp"
     />
 
+    <Button
+            android:id="@+id/btnParse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="Json"/>
+
+
+
 
 </LinearLayout>
