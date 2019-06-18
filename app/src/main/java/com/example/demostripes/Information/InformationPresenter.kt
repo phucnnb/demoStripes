@@ -34,7 +34,6 @@ class InformationPresenter(private var context: Context, private var view: Infor
             override fun onError(e: java.lang.Exception) {
                 view.getInformationCard(cardInformation, false, null)
             }
-
         })
     }
 
@@ -42,15 +41,15 @@ class InformationPresenter(private var context: Context, private var view: Infor
         Log.d("AAA",email)
         listEmail = ArrayList()
 
-        val informationEmail_1 : HashMap<String,String> = HashMap()
-        informationEmail_1["email"] = email
-        val informationEmail_2 : HashMap<String,String> = HashMap()
-        informationEmail_2["tokenid"] = tokenId
+        val informationEmail : HashMap<String,String> = HashMap()
+        informationEmail["email"] = email
+        val informationTokenId : HashMap<String,String> = HashMap()
+        informationTokenId["tokenid"] = tokenId
 
-        (listEmail as ArrayList<HashMap<String, String>>).add(informationEmail_1)
-        (listEmail as ArrayList<HashMap<String, String>>).add(informationEmail_2)
+        (listEmail as ArrayList<HashMap<String, String>>).add(informationEmail)
+        (listEmail as ArrayList<HashMap<String, String>>).add(informationTokenId)
 
-        var downloadData : DownloadData1 = DownloadData1(listEmail,"https://baophuc.000webhostapp.com/createStripes.php")
+        val downloadData = DownloadData1(listEmail,Constants.URL_CUSTOMER_ID)
         downloadData.execute()
         data = downloadData.get()
         cusID = data
@@ -65,56 +64,31 @@ class InformationPresenter(private var context: Context, private var view: Infor
 
         (listCustom as ArrayList<HashMap<String, String>>).add(idCustom)
 
-        var downloadData1 : DownloadData1 = DownloadData1(listCustom,"https://baophuc.000webhostapp.com/getIDcard.php")
+        val downloadData1 = DownloadData1(listCustom,Constants.URL_CARD_ID)
         downloadData1.execute()
-        var data = downloadData1.get()
+        val data = downloadData1.get()
         Log.d ("DDD" , data)
 
-        var jsonObject = JSONObject(data)
-        var jsonArray = jsonObject.getJSONArray("data")
+        val jsonObject = JSONObject(data)
+        val jsonArray = jsonObject.getJSONArray("data")
         for (i in 0 until jsonArray.length()) {
 
-            var jsonObject = jsonArray.getJSONObject(0)
-            var id: String = jsonObject.getString("id")
-            Log.d("DDD", "ID: " + id )
+            val jsonObject1 = jsonArray.getJSONObject(0)
+            val id: String = jsonObject1.getString("id")
+            Log.d("DDD", "ID: $id")
             cardID = id
         }
     }
 
-    fun logicGetInformation(cardInformation: Card, email: String, price: String, id: String) {
+    fun logicGetInformation(email: String, price: String, id: String) {
 
         xulitaikhoan(email,price,tokenID,"usd",id)
-        Log.d("AAA","Id Customer: " + id)
-        var downloadData1 : DownloadData1 = DownloadData1(listInfo,"https://baophuc.000webhostapp.com/payment.php")
+        Log.d("AAA", "Id Customer: $id")
+        val downloadData1 = DownloadData1(listInfo,Constants.URL_PAYMENT)
         downloadData1.execute()
         data = downloadData1.get()
         Log.d("AAA",data)
-        /*val stripe = Stripe(context, Constants.PUBLISHABLE_KEY)
-
-        stripe.createToken(cardInformation, object : TokenCallback {
-            override fun onSuccess(result: Token) {
-                xulitaikhoan(email,price,result.id,"usd",id)
-                Log.d("AAA","Id Customer: " + id)
-                var downloadData1 : DownloadData1 = DownloadData1(listInfo,"https://baophuc.000webhostapp.com/payment.php")
-                downloadData1.execute()
-                data = downloadData1.get()
-                Log.d("AAA",data)
-                view.payment(cardInformation,true,result)
-
-
-            }
-
-            override fun onError(e: java.lang.Exception) {
-                view.payment(cardInformation, false, null)
-            }
-
-        })*/
-
-    }
-
-    fun logicSendData() {
-
-    }
+           }
 
     private fun xulitaikhoan(
         email: String,
@@ -139,15 +113,12 @@ class InformationPresenter(private var context: Context, private var view: Infor
         val information5 : HashMap<String,String> = HashMap()
         information5["customer"] = id
 
-
-
         (listInfo as ArrayList<HashMap<String, String>>).add(information1)
         (listInfo as ArrayList<HashMap<String, String>>).add(information2)
         (listInfo as ArrayList<HashMap<String, String>>).add(information3)
         (listInfo as ArrayList<HashMap<String, String>>).add(information4)
         (listInfo as ArrayList<HashMap<String, String>>).add(information5)
     }
-
 
     override fun download(s: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
