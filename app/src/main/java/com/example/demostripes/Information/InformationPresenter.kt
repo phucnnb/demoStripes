@@ -15,13 +15,13 @@ import org.json.JSONObject
 class InformationPresenter(private var context: Context, private var view: InformationView) :Download  {
 
 
-    var listInfo: List<HashMap<String, String>>? = null
-    var listEmail: List<HashMap<String, String>>? = null
-    var listCustom: List<HashMap<String, String>>? = null
-    var data : String = ""
-    var tokenID: String = ""
-    var cusID : String = ""
-    var cardID : String =""
+    private var listInfo: List<HashMap<String, String>>? = null
+    private var listEmail: List<HashMap<String, String>>? = null
+    private var listCustom: List<HashMap<String, String>>? = null
+    private var data : String = ""
+    private var tokenID: String = ""
+    private var cusID : String = ""
+    private var cardID : String =""
     fun logicGetToken(cardInformation: Card) {
         val stripe = Stripe(context, Constants.PUBLISHABLE_KEY)
         stripe.createToken(cardInformation, object : TokenCallback {
@@ -82,7 +82,7 @@ class InformationPresenter(private var context: Context, private var view: Infor
 
     fun logicGetInformation(email: String, price: String, id: String) {
 
-        xulitaikhoan(email,price,tokenID,"usd",id)
+        xulitaikhoan(email,price,tokenID,"usd")
         Log.d("AAA", "Id Customer: $id")
         val downloadData1 = DownloadData1(listInfo,Constants.URL_PAYMENT)
         downloadData1.execute()
@@ -93,7 +93,7 @@ class InformationPresenter(private var context: Context, private var view: Infor
     private fun xulitaikhoan(
         email: String,
         price: String,
-        result: String,
+        //result: String,
         s2: String,
         id: String
     ) {
