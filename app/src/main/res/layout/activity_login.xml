@@ -12,7 +12,7 @@
             android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="vertical" 
+            android:orientation="vertical"
             tools:ignore="MissingConstraints">
         <ImageView
                 android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
         />
 
         <EditText
-                android:id="@+id/editRegisterPass"
+                android:id="@+id/editLoginPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -43,7 +43,7 @@
         />
 
         <Button
-                android:id="@+id/btnRegisterOK"
+                android:id="@+id/btnLoginOK"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="OK"

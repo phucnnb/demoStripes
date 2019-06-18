@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import com.example.demostripes.Constants
 import com.example.demostripes.Download.DownloadData1
+import com.example.demostripes.Login.Login
 import com.example.demostripes.R
 import com.stripe.android.Stripe
 import com.stripe.android.TokenCallback
@@ -102,7 +103,7 @@ class AddCard : AppCompatActivity() {
         val data = updateCardId.get()
         if (data == "1"){
             Toast.makeText(applicationContext,"Add Card Success",Toast.LENGTH_SHORT).show()
-            val i = Intent(this,Register::class.java)
+            val i = Intent(this, Login::class.java)
             startActivity(i)
         }else{
             Toast.makeText(applicationContext,"Fail",Toast.LENGTH_SHORT).show()
