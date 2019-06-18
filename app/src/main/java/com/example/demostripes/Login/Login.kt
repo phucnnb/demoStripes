@@ -4,12 +4,17 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import com.example.demostripes.Constants
+import com.example.demostripes.Download.DownloadData1
 import com.example.demostripes.R
 import com.example.demostripes.register.Register
 import kotlinx.android.synthetic.main.activity_login.*
 
 class Login : AppCompatActivity() {
-
+        private var account : String = ""
+        private var password : String = ""
+    private var listUser : List<HashMap<String, String>>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Hide the status bar.
@@ -18,7 +23,19 @@ class Login : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         btnLoginOK.setOnClickListener {
-            
+            account = editLoginAcc.text.toString()
+            password = editLoginPass.text.toString()
+
+            prepareList()
+
+            val loginAccount = DownloadData1 (listUser,Constants.URL_LOGIN)
+            loginAccount.execute()
+            val data = loginAccount.get()
+            if(data == "1"){
+                Toast.makeText(applicationContext,"Thành Công",Toast.LENGTH_SHORT).show()
+            }else {
+                Toast.makeText(applicationContext,"Thất Bại",Toast.LENGTH_SHORT).show()
+            }
         }
 
         tvRegister.setOnClickListener {
@@ -26,5 +43,17 @@ class Login : AppCompatActivity() {
             startActivity(i)
         }
 
+    }
+
+    private fun prepareList() {
+        listUser = ArrayList()
+
+        val itemAccount : HashMap<String,String> = HashMap()
+        itemAccount["account"] = account
+        val itemPassword : HashMap<String,String> = HashMap()
+        itemPassword["pw"] = password
+
+        (listUser as ArrayList<HashMap<String, String>>).add(itemAccount)
+        (listUser as ArrayList<HashMap<String, String>>).add(itemPassword)
     }
 }
