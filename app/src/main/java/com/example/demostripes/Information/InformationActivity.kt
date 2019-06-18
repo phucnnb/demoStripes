@@ -59,7 +59,7 @@ class InformationActivity : AppCompatActivity(), InformationView {
             email = editEmail.text.toString()
             price = editPrice.text.toString()
             idCus = txtIDcus.text.toString()
-            logic.logicGetInformation(cardInformation,email,price,idCus)
+            logic.logicGetInformation(email,price,idCus)
 
         }
     }
