@@ -1,5 +1,6 @@
 package com.example.demostripes.Register
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
@@ -20,7 +21,7 @@ class Register : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-
+        sharePre = getSharedPreferences("sharePre", Context.MODE_PRIVATE)
         btnRegisterOK.setOnClickListener {
             account = editRegisterAcc.text.toString()
             password = editRegisterPass.text.toString()

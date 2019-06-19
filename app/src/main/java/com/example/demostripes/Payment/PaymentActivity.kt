@@ -19,7 +19,7 @@ class PaymentActivity : AppCompatActivity() {
     private lateinit var sharePre: SharedPreferences
     private var account: String = ""
     private var idcard : String = ""
-    private val idcustomer: String = ""
+    private var idcustomer: String = ""
     private var listInfo: List<HashMap<String, String>>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +28,7 @@ class PaymentActivity : AppCompatActivity() {
         sharePre = getSharedPreferences("sharePre", Context.MODE_PRIVATE)
         account = sharePre.getString(Constants.ACCOUNT,"")
         idcard = sharePre.getString(Constants.CARD_ID,"")
-
+        idcustomer = sharePre.getString(Constants.CUSTOMER_ID,"")
         btnBuy.setOnClickListener {
             if(idcard.equals("none")){
                 Toast.makeText(applicationContext,"Bạn chưa có thẻ",Toast.LENGTH_SHORT).show()

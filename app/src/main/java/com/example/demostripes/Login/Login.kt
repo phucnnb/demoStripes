@@ -12,6 +12,7 @@ import com.example.demostripes.Download.DownloadData1
 import com.example.demostripes.Payment.PaymentActivity
 import com.example.demostripes.R
 import com.example.demostripes.Register.Register
+
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 
@@ -43,9 +44,11 @@ class Login : AppCompatActivity() {
             if(check == "1"){
                 Toast.makeText(applicationContext,"Thành Công",Toast.LENGTH_SHORT).show()
                 val idcard : String = jsonObject.getString("idcard")
+                val idcustomer : String = jsonObject.getString("idcustomer")
                 val editor = sharePre.edit()
                 editor.putString(Constants.ACCOUNT, account)
                 editor.putString(Constants.CARD_ID, idcard)
+                editor.putString(Constants.CUSTOMER_ID, idcustomer)
                 editor.commit()
                 val i = Intent(this,PaymentActivity::class.java)
                 startActivity(i)
@@ -55,7 +58,7 @@ class Login : AppCompatActivity() {
         }
 
         tvRegister.setOnClickListener {
-            val i = Intent(this,Register::class.java)
+            val i = Intent(this, Register::class.java)
             startActivity(i)
         }
 

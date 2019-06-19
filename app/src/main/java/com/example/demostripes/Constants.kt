@@ -14,5 +14,6 @@ class Constants {
 
         const val ACCOUNT = "account"
         const val CARD_ID = "cardid"
+        const val CUSTOMER_ID = "customerid"
     }
 }
