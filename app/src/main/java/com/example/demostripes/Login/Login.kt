@@ -49,6 +49,7 @@ class Login : AppCompatActivity() {
                 editor.putString(Constants.ACCOUNT, account)
                 editor.putString(Constants.CARD_ID, idcard)
                 editor.putString(Constants.CUSTOMER_ID, idcustomer)
+                editor.putBoolean(Constants.CHECK_LOGIN, true)
                 editor.commit()
                 val i = Intent(this,PaymentActivity::class.java)
                 startActivity(i)
@@ -58,6 +59,9 @@ class Login : AppCompatActivity() {
         }
 
         tvRegister.setOnClickListener {
+            val editor = sharePre.edit()
+            editor.putBoolean(Constants.CHECK_LOGIN, false)
+            editor.commit()
             val i = Intent(this, Register::class.java)
             startActivity(i)
         }

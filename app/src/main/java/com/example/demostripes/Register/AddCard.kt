@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.example.demostripes.Constants
 import com.example.demostripes.Download.DownloadData1
 import com.example.demostripes.Login.Login
+import com.example.demostripes.Payment.PaymentActivity
 import com.example.demostripes.R
 import com.stripe.android.Stripe
 import com.stripe.android.TokenCallback
@@ -24,6 +25,7 @@ class AddCard : AppCompatActivity() {
     private var tokenId : String = ""
     private var customerId : String = ""
     private var cardID : String = ""
+    private var checkLogin : Boolean = false
     private var listAccount: List<HashMap<String, String>>? = null
     private var listCustom: List<HashMap<String, String>>? = null
     private var listCardId: List<HashMap<String, String>>? = null
@@ -35,6 +37,7 @@ class AddCard : AppCompatActivity() {
 
         sharePre = getSharedPreferences("sharePre", Context.MODE_PRIVATE)
         account = sharePre.getString(Constants.ACCOUNT,"")
+        checkLogin = sharePre.getBoolean(Constants.CHECK_LOGIN,false)
 
 
         btnAddCard.setOnClickListener {
@@ -113,8 +116,16 @@ class AddCard : AppCompatActivity() {
         val data = updateCardId.get()
         if (data == "1"){
             Toast.makeText(applicationContext,"Add Card Success",Toast.LENGTH_SHORT).show()
-            val i = Intent(this, Login::class.java)
-            startActivity(i)
+            if (checkLogin){
+                val loadID = DownloadData1(listAccount,Constants.URL_LOAD_ID)
+                loadID.execute()
+                
+                val i = Intent(this, PaymentActivity::class.java)
+                startActivity(i)
+            }else{
+                val i = Intent(this, Login::class.java)
+                startActivity(i)
+            }
         }else{
             Toast.makeText(applicationContext,"Fail",Toast.LENGTH_SHORT).show()
         }
