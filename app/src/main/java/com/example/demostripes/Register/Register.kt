@@ -1,6 +1,7 @@
-package com.example.demostripes.register
+package com.example.demostripes.Register
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -14,6 +15,8 @@ class Register : AppCompatActivity() {
     private var account : String = ""
     private var password : String = ""
     private var listUser : List<HashMap<String, String>>? = null
+    private lateinit var sharePre: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -21,6 +24,10 @@ class Register : AppCompatActivity() {
         btnRegisterOK.setOnClickListener {
             account = editRegisterAcc.text.toString()
             password = editRegisterPass.text.toString()
+
+            val editor = sharePre.edit()
+            editor.putString(Constants.ACCOUNT, account)
+            editor.commit()
 
             prepareList()
 

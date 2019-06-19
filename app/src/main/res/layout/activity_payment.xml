@@ -5,9 +5,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Register.AddCard"
+        tools:context=".Payment.PaymentActivity"
         android:orientation="vertical"
 >
+
     <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -20,25 +21,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="ADD CARD"
+                    android:text="PAYMENT"
                     android:textColor="#000"
                     android:textSize="16sp" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <com.stripe.android.view.CardInputWidget
-            android:id="@+id/cardAddCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"/>
-
     <Button
-            android:id="@+id/btnAddCard"
+            android:id="@+id/btnBuy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ADD"
+            android:text="BUY"
             android:layout_gravity="center"
             android:layout_marginTop="56dp"
     />
+
+
+
 
 </LinearLayout>

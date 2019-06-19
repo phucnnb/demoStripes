@@ -1,7 +1,9 @@
-package com.example.demostripes.register
+package com.example.demostripes.Register
 
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,17 +20,22 @@ import org.json.JSONObject
 
 class AddCard : AppCompatActivity() {
 
-    private var account : String = "phucpaulnguyen1508@gmail.com"
+    private var account : String = ""
     private var tokenId : String = ""
     private var customerId : String = ""
     private var cardID : String = ""
     private var listAccount: List<HashMap<String, String>>? = null
     private var listCustom: List<HashMap<String, String>>? = null
     private var listCardId: List<HashMap<String, String>>? = null
+    private lateinit var sharePre: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_card)
+
+        sharePre = getSharedPreferences("sharePre", Context.MODE_PRIVATE)
+        account = sharePre.getString(Constants.ACCOUNT,"")
+
 
         btnAddCard.setOnClickListener {
             val stripe = Stripe(this, Constants.PUBLISHABLE_KEY)
@@ -94,9 +101,12 @@ class AddCard : AppCompatActivity() {
         informationAcc["account"] = account
         val informationCardId : HashMap<String,String> = HashMap()
         informationCardId["idcard"] = cardID
+        val informationCustomerId : HashMap<String,String> = HashMap()
+        informationCustomerId["idcustomer"] = customerId
 
         (listCardId as ArrayList<HashMap<String, String>>).add(informationAcc)
         (listCardId as ArrayList<HashMap<String, String>>).add(informationCardId)
+        (listCardId as ArrayList<HashMap<String, String>>).add(informationCustomerId)
 
         val updateCardId = DownloadData1(listCardId,Constants.URL_UPDATE_CARD_ID)
         updateCardId.execute()

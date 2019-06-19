@@ -11,5 +11,8 @@ class Constants {
         const val URL_REGISTER = "https://baophuc.000webhostapp.com/demoStripe/register.php"
         const val URL_UPDATE_CARD_ID = "https://baophuc.000webhostapp.com/demoStripe/updateCardId.php"
         const val URL_LOGIN = "https://baophuc.000webhostapp.com/demoStripe/login.php"
+
+        const val ACCOUNT = "account"
+        const val CARD_ID = "cardid"
     }
 }
