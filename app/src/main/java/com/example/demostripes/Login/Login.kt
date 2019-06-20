@@ -43,12 +43,8 @@ class Login : AppCompatActivity() {
             val check : String = jsonObject.getString("ketqua")
             if(check == "1"){
                 Toast.makeText(applicationContext,"Thành Công",Toast.LENGTH_SHORT).show()
-                val idcard : String = jsonObject.getString("idcard")
-                val idcustomer : String = jsonObject.getString("idcustomer")
                 val editor = sharePre.edit()
                 editor.putString(Constants.ACCOUNT, account)
-                editor.putString(Constants.CARD_ID, idcard)
-                editor.putString(Constants.CUSTOMER_ID, idcustomer)
                 editor.putBoolean(Constants.CHECK_LOGIN, true)
                 editor.commit()
                 val i = Intent(this,PaymentActivity::class.java)

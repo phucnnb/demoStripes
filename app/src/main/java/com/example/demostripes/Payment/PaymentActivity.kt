@@ -13,6 +13,7 @@ import com.example.demostripes.Download.DownloadData1
 import com.example.demostripes.R
 import com.example.demostripes.Register.AddCard
 import kotlinx.android.synthetic.main.activity_payment.*
+import org.json.JSONObject
 
 
 class PaymentActivity : AppCompatActivity() {
@@ -21,14 +22,25 @@ class PaymentActivity : AppCompatActivity() {
     private var idcard : String = ""
     private var idcustomer: String = ""
     private var listInfo: List<HashMap<String, String>>? = null
+    private var listAccount: List<HashMap<String, String>>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
 
         sharePre = getSharedPreferences("sharePre", Context.MODE_PRIVATE)
         account = sharePre.getString(Constants.ACCOUNT,"")
-        idcard = sharePre.getString(Constants.CARD_ID,"")
-        idcustomer = sharePre.getString(Constants.CUSTOMER_ID,"")
+
+        listAccount = ArrayList()
+
+        val informationEmail : HashMap<String,String> = HashMap()
+        informationEmail["email"] = account
+
+        (listAccount as ArrayList<HashMap<String, String>>).add(informationEmail)
+        val loadID = DownloadData1(listAccount,Constants.URL_LOAD_ID)
+        loadID.execute()
+        val data = loadID.get()
+        loadIDaccount(data)
+
         btnBuy.setOnClickListener {
             if(idcard.equals("none")){
                 Toast.makeText(applicationContext,"Bạn chưa có thẻ",Toast.LENGTH_SHORT).show()
@@ -41,9 +53,14 @@ class PaymentActivity : AppCompatActivity() {
                 downloadData1.execute()
                 val data = downloadData1.get()
                 Log.d("AAA",data)
-
             }
         }
+    }
+
+    private fun loadIDaccount(get: String) {
+        val jsonObject = JSONObject(get)
+        idcard  = jsonObject.getString("idcard")
+        idcustomer  = jsonObject.getString("idcustomer")
     }
 
     private fun xulitaikhoan(
