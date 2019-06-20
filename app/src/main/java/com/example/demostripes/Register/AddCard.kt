@@ -119,7 +119,7 @@ class AddCard : AppCompatActivity() {
             if (checkLogin){
                 val loadID = DownloadData1(listAccount,Constants.URL_LOAD_ID)
                 loadID.execute()
-                
+                loadIDaccount(loadID.get())
                 val i = Intent(this, PaymentActivity::class.java)
                 startActivity(i)
             }else{
@@ -129,5 +129,15 @@ class AddCard : AppCompatActivity() {
         }else{
             Toast.makeText(applicationContext,"Fail",Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun loadIDaccount(get: String) {
+        val jsonObject = JSONObject(get)
+        val idcard : String = jsonObject.getString("idcard")
+        val idcustomer : String = jsonObject.getString("idcustomer")
+        val editor = sharePre.edit()
+        editor.putString(Constants.CARD_ID, idcard)
+        editor.putString(Constants.CUSTOMER_ID, idcustomer)
+        editor.commit()
     }
 }
