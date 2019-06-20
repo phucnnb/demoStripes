@@ -28,7 +28,7 @@ class PaymentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_payment)
 
         sharePre = getSharedPreferences("sharePre", Context.MODE_PRIVATE)
-        account = sharePre.getString(Constants.ACCOUNT,"")
+        account = sharePre.getString(Constants.ACCOUNT,"")      //get account logged
 
         listAccount = ArrayList()
 
@@ -36,11 +36,13 @@ class PaymentActivity : AppCompatActivity() {
         informationEmail["email"] = account
 
         (listAccount as ArrayList<HashMap<String, String>>).add(informationEmail)
-        val loadID = DownloadData1(listAccount,Constants.URL_LOAD_ID)
+        val loadID = DownloadData1(listAccount,Constants.URL_LOAD_ID)       //Call API get Card ID and Customer ID  of account logged
         loadID.execute()
         val data = loadID.get()
         loadIDaccount(data)
 
+        // Click buy
+        //Have you checked your existing card?
         btnBuy.setOnClickListener {
             if(idcard.equals("none")){
                 Toast.makeText(applicationContext,"Bạn chưa có thẻ",Toast.LENGTH_SHORT).show()
@@ -53,6 +55,7 @@ class PaymentActivity : AppCompatActivity() {
                 downloadData1.execute()
                 val data = downloadData1.get()
                 Log.d("AAA",data)
+                Toast.makeText(applicationContext,"Payment has been charged!!!",Toast.LENGTH_SHORT).show()
             }
         }
     }

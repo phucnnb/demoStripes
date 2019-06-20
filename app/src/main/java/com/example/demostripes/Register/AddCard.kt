@@ -36,18 +36,18 @@ class AddCard : AppCompatActivity() {
         setContentView(R.layout.activity_add_card)
 
         sharePre = getSharedPreferences("sharePre", Context.MODE_PRIVATE)
-        account = sharePre.getString(Constants.ACCOUNT,"")
-        checkLogin = sharePre.getBoolean(Constants.CHECK_LOGIN,false)
+        account = sharePre.getString(Constants.ACCOUNT,"")                   //get account saved
+        checkLogin = sharePre.getBoolean(Constants.CHECK_LOGIN,false)        //get check login saved
 
-
+        //Click button add card
         btnAddCard.setOnClickListener {
-            val stripe = Stripe(this, Constants.PUBLISHABLE_KEY)
+            val stripe = Stripe(this, Constants.PUBLISHABLE_KEY)   // get card for check card and create token id
             stripe.createToken(cardAddCard.card!!, object : TokenCallback {
                 override fun onSuccess(result: Token) {
-                    tokenId = result.id
-                    createAccountStripe()
-                    getCardId()
-                    addCard()
+                    tokenId = result.id                // get token ID
+                    createAccountStripe()              // funtion create account
+                    getCardId()                        // funtion get Card ID
+                    addCard()                          // funtion add Card ID and Customer ID into account on server
                 }
 
                 override fun onError(e: java.lang.Exception) {
@@ -57,6 +57,7 @@ class AddCard : AppCompatActivity() {
         }
     }
 
+    // create Account on Stripe and get Customer ID on Stripe
     private fun createAccountStripe() {
         listAccount = ArrayList()
 
@@ -68,14 +69,14 @@ class AddCard : AppCompatActivity() {
         (listAccount as ArrayList<HashMap<String, String>>).add(informationEmail)
         (listAccount as ArrayList<HashMap<String, String>>).add(informationTokenId)
 
-        val getCustomerID = DownloadData1(listAccount,Constants.URL_CUSTOMER_ID)
+        val getCustomerID = DownloadData1(listAccount,Constants.URL_CUSTOMER_ID)      //Call API for get Customer ID
         getCustomerID.execute()
         val data = getCustomerID.get()
         customerId = data
         Log.d("EEE", "Card ID: $customerId")
 
     }
-
+    // get Card ID on Stripe
     private fun getCardId() {
         listCustom = ArrayList()
         val idCustom : HashMap<String,String> = HashMap()
@@ -83,11 +84,11 @@ class AddCard : AppCompatActivity() {
 
         (listCustom as ArrayList<HashMap<String, String>>).add(idCustom)
 
-        val getIdCard = DownloadData1(listCustom,Constants.URL_CARD_ID)
+        val getIdCard = DownloadData1(listCustom,Constants.URL_CARD_ID)   //Call API for get Card ID
         getIdCard.execute()
         val data = getIdCard.get()
 
-        val jsonObject = JSONObject(data)
+        val jsonObject = JSONObject(data)                                 // decode Json data
         val jsonArray = jsonObject.getJSONArray("data")
         for (i in 0 until jsonArray.length()) {
             val jsonObject1 = jsonArray.getJSONObject(0)
@@ -97,6 +98,7 @@ class AddCard : AppCompatActivity() {
         }
     }
 
+    // add Card ID and Custom ID on server
     private fun addCard() {
         listCardId = ArrayList()
 
@@ -111,7 +113,7 @@ class AddCard : AppCompatActivity() {
         (listCardId as ArrayList<HashMap<String, String>>).add(informationCardId)
         (listCardId as ArrayList<HashMap<String, String>>).add(informationCustomerId)
 
-        val updateCardId = DownloadData1(listCardId,Constants.URL_UPDATE_CARD_ID)
+        val updateCardId = DownloadData1(listCardId,Constants.URL_UPDATE_CARD_ID)      // Call API for add Card ID and Customer ID into account on Server
         updateCardId.execute()
         val data = updateCardId.get()
         if (data == "1"){

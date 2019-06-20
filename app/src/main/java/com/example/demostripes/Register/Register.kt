@@ -22,17 +22,21 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         sharePre = getSharedPreferences("sharePre", Context.MODE_PRIVATE)
+
+        // Click Button Register
         btnRegisterOK.setOnClickListener {
+
             account = editRegisterAcc.text.toString()
             password = editRegisterPass.text.toString()
 
             val editor = sharePre.edit()
-            editor.putString(Constants.ACCOUNT, account)
+            editor.putString(Constants.ACCOUNT, account)  //save account
             editor.commit()
+
 
             prepareList()
 
-            val checkAccount = DownloadData1(listUser,Constants.URL_CHECK_USER)
+            val checkAccount = DownloadData1(listUser,Constants.URL_CHECK_USER) //Call API for  checked your registered account before
             checkAccount.execute()
             val check = checkAccount.get()
 
@@ -40,7 +44,7 @@ class Register : AppCompatActivity() {
                 Toast.makeText(applicationContext,"Tài Khoản Đã Được Đăng Kí",Toast.LENGTH_SHORT).show()
             }else{
 
-                val downloadData1 = DownloadData1(listUser,Constants.URL_REGISTER)
+                val downloadData1 = DownloadData1(listUser,Constants.URL_REGISTER)  // Call API for register
                 downloadData1.execute()
                 val data = downloadData1.get()
                 if (data == "1"){
@@ -55,6 +59,7 @@ class Register : AppCompatActivity() {
         }
     }
 
+    // Prepare listHashMap for register
     private fun prepareList() {
         listUser = ArrayList()
 

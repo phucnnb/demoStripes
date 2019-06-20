@@ -30,23 +30,29 @@ class Login : AppCompatActivity() {
 
         sharePre = getSharedPreferences("sharePre", Context.MODE_PRIVATE)
 
+
+        // Click Button Login
         btnLoginOK.setOnClickListener {
             account = editLoginAcc.text.toString()
             password = editLoginPass.text.toString()
 
             prepareList()
 
-            val loginAccount = DownloadData1 (listUser,Constants.URL_LOGIN)
+            val loginAccount = DownloadData1 (listUser,Constants.URL_LOGIN)   //call API for check account
             loginAccount.execute()
             val data = loginAccount.get()
             val jsonObject = JSONObject(data)
             val check : String = jsonObject.getString("ketqua")
+
+            // check account
             if(check == "1"){
                 Toast.makeText(applicationContext,"Thành Công",Toast.LENGTH_SHORT).show()
+
                 val editor = sharePre.edit()
-                editor.putString(Constants.ACCOUNT, account)
-                editor.putBoolean(Constants.CHECK_LOGIN, true)
+                editor.putString(Constants.ACCOUNT, account)  //save account
+                editor.putBoolean(Constants.CHECK_LOGIN, true) // save check login
                 editor.commit()
+
                 val i = Intent(this,PaymentActivity::class.java)
                 startActivity(i)
             }else {
@@ -54,6 +60,7 @@ class Login : AppCompatActivity() {
             }
         }
 
+        // Click textview Register
         tvRegister.setOnClickListener {
             val editor = sharePre.edit()
             editor.putBoolean(Constants.CHECK_LOGIN, false)
@@ -64,6 +71,7 @@ class Login : AppCompatActivity() {
 
     }
 
+    // prepare listHashmap include account and password for Login
     private fun prepareList() {
         listUser = ArrayList()
 
