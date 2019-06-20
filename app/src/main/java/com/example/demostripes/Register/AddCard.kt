@@ -117,9 +117,12 @@ class AddCard : AppCompatActivity() {
         if (data == "1"){
             Toast.makeText(applicationContext,"Add Card Success",Toast.LENGTH_SHORT).show()
             if (checkLogin){
+                Log.d("JJJ",listAccount.toString())
                 val loadID = DownloadData1(listAccount,Constants.URL_LOAD_ID)
                 loadID.execute()
-                loadIDaccount(loadID.get())
+                val data = loadID.get()
+                Log.d("JJJ",data)
+                loadIDaccount(data)
                 val i = Intent(this, PaymentActivity::class.java)
                 startActivity(i)
             }else{
